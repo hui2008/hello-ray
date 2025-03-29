@@ -1,13 +1,19 @@
 import ray
 from ray import serve
+from fastapi import FastAPI
 
-def hello(request):
-    return "Hello, world!"
+app = FastAPI()
+
+
+@app.get("/hello")
+def hello():
+    return "Hello, world!!"
 
 @serve.deployment
-def hello():
-    return "hello"
+@serve.ingress(app)
+class Deployment:
+    pass
 
 if __name__ == "__main__":
     ray.init(dashboard_host='0.0.0.0')
-    serve.run(hello.bind(), blocking=True, route_prefix="/hello")
+    serve.run(Deployment.bind(), blocking=True, route_prefix="/")
