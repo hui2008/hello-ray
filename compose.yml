@@ -14,13 +14,13 @@ services:
     depends_on:
       - ray_head
 
-  # serve_app:
-  #   build: .
-  #   command: python serve_app.py
-  #   environment:
-  #     RAY_ADDRESS: "ray://ray_head:10001"
-  #   ports:
-  #     - "8000:8000"
-  #   depends_on:
-  #     - ray_head
-  #     - ray_worker
+  serve_app:
+    build: .
+    command: python serve_app.py
+    environment:
+      RAY_ADDRESS: "ray://ray_head:10001"
+    ports:
+      - "8085:8000"
+    depends_on:
+      - ray_head
+      - ray_worker
