@@ -4,14 +4,12 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-@app.get("/hello")
-def hello():
-    return "Hello from Ray Serve!"
-
 @serve.deployment
 @serve.ingress(app)
 class HelloWorld:
-    pass
+    @app.get("/hello")
+    async def hello(self):
+        return "Hello from Ray Serve!"
 
 if __name__ == "__main__":
     ray.init(address="auto")
