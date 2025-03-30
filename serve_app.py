@@ -15,5 +15,5 @@ class HelloWorld:
 
 if __name__ == "__main__":
     ray.init(address="auto")
-    serve.start(http_options={"host": "0.0.0.0", "port": 8000})
+    serve.start(http_options={"host": "0.0.0.0"})
     serve.run(HelloWorld.bind(), blocking=True, route_prefix="/")
