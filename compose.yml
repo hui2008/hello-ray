@@ -1,13 +1,13 @@
 services:
   ray_head:
-    image: rayproject/ray:2.44.1-aarch64
+    image: rayproject/ray:2.44.1-py312-aarch64
     command: ray start --head --port=6379 --dashboard-host=0.0.0.0 --num-cpus=2 --block
     ports:
       - 8265:8265
       - 8000:8000
 
   ray_worker:
-    image: rayproject/ray:2.44.1-aarch64
+    image: rayproject/ray:2.44.1-py312-aarch64
     command: ray start --address=ray_head:6379 --num-cpus=2 --block
     deploy:
       replicas: 2
