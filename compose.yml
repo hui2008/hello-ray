@@ -1,0 +1,26 @@
+services:
+  ray_head:
+    image: rayproject/ray:2.44.1-aarch64
+    command: ray start --head --port=6379 --dashboard-host=0.0.0.0 --num-cpus=2 --block
+    ports:
+      - "6379:6379"
+      - "8265:8265"
+
+  ray_worker:
+    image: rayproject/ray:2.44.1-aarch64
+    command: ray start --address=ray_head:6379 --num-cpus=2 --block
+    deploy:
+      replicas: 2
+    depends_on:
+      - ray_head
+
+  # serve_app:
+  #   build: .
+  #   command: python serve_app.py
+  #   environment:
+  #     RAY_ADDRESS: "ray://ray_head:10001"
+  #   ports:
+  #     - "8000:8000"
+  #   depends_on:
+  #     - ray_head
+  #     - ray_worker
